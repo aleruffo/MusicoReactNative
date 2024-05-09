@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "ReactNative-tutorial",
-    "slug": "ReactNative-tutorial",
+    "name": "Musico",
+    "slug": "musico",
+    "scheme": "myscheme",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aleruffo.musico"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +27,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "92336582-63ca-426f-85fd-d5b4b3ab9cd0"
+      }
     }
   }
 }
