@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  content: ['./app/**/*.{js,jsx,ts,tsx}', './components/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -21,17 +21,17 @@ module.exports = {
         },
         accent: '#F42D78',
         gradient: 'linear-gradient(90deg, #F42D78 100%, #6E31D8 100%)',
-      }
+      },
     },
     fontFamily: {
-      pthin: ["Goldplay-Thin", "sans-serif"],
-      plight: ["Goldplay-Light", "sans-serif"],
-      pregular: ["Goldplay-Regular", "sans-serif"],
-      pmedium: ["Goldplay-Medium", "sans-serif"],
-      psemibold: ["Goldplay-SemiBold", "sans-serif"],
-      pbold: ["Goldplay-Bold", "sans-serif"],
-      pblack: ["Goldplay-Black", "sans-serif"],
+      pthin: ['Goldplay-Thin', 'sans-serif'],
+      plight: ['Goldplay-Light', 'sans-serif'],
+      pregular: ['Goldplay-Regular', 'sans-serif'],
+      pmedium: ['Goldplay-Medium', 'sans-serif'],
+      psemibold: ['Goldplay-SemiBold', 'sans-serif'],
+      pbold: ['Goldplay-Bold', 'sans-serif'],
+      pblack: ['Goldplay-Black', 'sans-serif'],
     },
   },
   plugins: [],
-}
+};

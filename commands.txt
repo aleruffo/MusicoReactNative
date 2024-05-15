@@ -1,0 +1,4 @@
+eas build --profile development-simulator --platform ios
+
+eas build --profile development --platform android
+
