@@ -24,6 +24,7 @@ const signupPage = () => {
       birthDate: new Date(),
       location: '',
       description: '',
+      profilePicture: '',
     },
     playedInstruments: [],
     genres: [],
@@ -38,6 +39,10 @@ const signupPage = () => {
       appleMusic: '',
       tidal: '',
       amazonMusic: '',
+    },
+    accountInfo: {
+      email: '',
+      password: '',
     },
   });
 

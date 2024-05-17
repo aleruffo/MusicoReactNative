@@ -3,7 +3,15 @@ import React from 'react';
 import { useState } from 'react';
 import { Icon } from 'react-native-elements';
 
-const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, ...props }) => {
+const FormField = ({
+  title,
+  value,
+  placeholder,
+  handleChangeText,
+  otherStyles,
+  supportText,
+  ...props
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
@@ -19,6 +27,7 @@ const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, .
             secureTextEntry={
               (title === 'Password' || title === 'Confirm Password') && !showPassword
             }
+            autoCorrect={false}
             {...props}
           />
 
@@ -35,6 +44,7 @@ const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, .
             </TouchableOpacity>
           )}
         </View>
+        {supportText && <Text className="text-red-500 font-pregular text-sm">{supportText}</Text>}
       </View>
     </>
   );

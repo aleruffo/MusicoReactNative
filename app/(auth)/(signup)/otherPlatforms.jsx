@@ -42,6 +42,7 @@ const OtherPlatformsSection = ({ user, setUser }) => {
             placeholder={`Add ${platform.name} link`}
             placeholderTextColor="#b0b0b0"
             value={user.otherPlatforms[platform.varName]}
+            autoCorrect={false}
             onChangeText={(text) => {
               setUser({
                 ...user,

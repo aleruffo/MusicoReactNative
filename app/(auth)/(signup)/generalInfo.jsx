@@ -13,11 +13,15 @@ import React from 'react';
 import { useState } from 'react';
 import FormField from '../../../components/FormField';
 import DatePicker from 'react-native-date-picker';
-import { useNavigation } from '@react-navigation/native';
 
 const GeneralInfoSection = ({ user, setUser }) => {
   const [open, setOpen] = useState(false);
-  const navigation = useNavigation();
+  var [isDateSelected, setIsDateSelected] = useState(false);
+
+  const handlePress = () => {
+    setOpen(true);
+    setIsDateSelected(true);
+  };
 
   return (
     <View className="bg-background-default grow">
@@ -61,9 +65,12 @@ const GeneralInfoSection = ({ user, setUser }) => {
           <TouchableOpacity
             className="w-full bg-secondary-opacity25 h-14 rounded-[15px]"
             title="Select Birth Date"
-            onPress={() => setOpen(true)}
+            onPress={() => handlePress()}
           >
-            <Text className={`font-pmedium text-lg px-4 pt-4 focus:text-text text-[#A1A1A1]`}>
+            <Text
+              className={`font-pmedium text-lg px-4 pt-4 focus:text-text`}
+              style={isDateSelected ? { color: '#F0ECF7' } : { color: '#A1A1A1' }}
+            >
               {user.generalInfo.birthDate.toDateString()}
             </Text>
           </TouchableOpacity>

@@ -33,3 +33,9 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# build output
+Musico.app/
+
+# tar.gz files
+*.tar.gz
