@@ -21,6 +21,7 @@ module.exports = {
         },
         accent: '#F42D78',
         gradient: 'linear-gradient(90deg, #F42D78 100%, #6E31D8 100%)',
+        grayopacity50: 'rgba(240, 236, 247, 0.2)',
       },
     },
     fontFamily: {

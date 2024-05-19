@@ -36,6 +36,7 @@ yarn-error.*
 
 # build output
 Musico.app/
+*.apk
 
 # tar.gz files
 *.tar.gz
