@@ -6,6 +6,7 @@ import TextandIconChip from '../../components/TextandIconChip';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import ProfileAudioCard from '../../components/ProfileAudioCard';
+import { router } from 'expo-router';
 
 const profileImage = 'https://i.pravatar.cc/';
 const username = 'andres_rossetti';
@@ -36,6 +37,10 @@ const Profile = () => {
   };
 
   const [auditionTracks, setAuditionTracks] = useState(initialAuditionTracks);
+
+  const logout = () => {
+    router.push('/signin');
+  };
 
   return (
     <ScrollView className="bg-background-default">
@@ -152,6 +157,19 @@ const Profile = () => {
               />
             </TouchableOpacity>
           </View>
+          <TouchableOpacity className="bg-gray-400 py-3 rounded-full flex-row justify-center items-center mt-4">
+            <Text className="text-white font-pbold mr-2">Edit profile</Text>
+            <Icon name="edit" type="material" color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="bg-red-700 py-3 rounded-full mt-4 flex-row justify-center items-center"
+            onPress={() => {
+              logout();
+            }}
+          >
+            <Text className="text-white font-pbold mr-2">Log out</Text>
+            <Icon name="logout" type="material" color="white" />
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ScrollView>

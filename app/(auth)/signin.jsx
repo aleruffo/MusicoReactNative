@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { WebView } from 'react-native-webview';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignIn = () => {
   const [cookies, setCookies] = useState([]);
@@ -25,8 +26,15 @@ const SignIn = () => {
   // Clear cookies when the component is mounted
   useEffect(() => {
     clearCookies();
-    console.log('len', cookies.length);
   }, []);
+
+  const onMessage = async (receivedCookies) => {
+    try {
+      await AsyncStorage.setItem('clientId', receivedCookies[0]);
+    } catch (e) {
+      // saving error
+    }
+  };
 
   return (
     <>
@@ -41,7 +49,7 @@ const SignIn = () => {
           >
             <SafeAreaView className="h-full bg-background">
               <View className="w-full h-full justify-center">
-                {cookies.length < 2 ? (
+                {cookies.length < 1 ? (
                   <>
                     <WebView
                       source={{
@@ -50,7 +58,7 @@ const SignIn = () => {
                       onMessage={(event) => {
                         const receivedCookies = event.nativeEvent.data.split(';');
                         setCookies(receivedCookies);
-                        console.log(receivedCookies);
+                        onMessage(receivedCookies);
                       }}
                       injectedJavaScript={`
                         window.ReactNativeWebView.postMessage(document.cookie);
@@ -66,7 +74,9 @@ const SignIn = () => {
                     <ActivityIndicator size="large" color="#fff" />
                     <TouchableOpacity
                       className="absolute bottom-0 right-0 p-4"
-                      onPress={() => router.push('home')}
+                      onPress={() => {
+                        router.push('home');
+                      }}
                     >
                       <Text className="text-white">Go Home</Text>
                     </TouchableOpacity>
