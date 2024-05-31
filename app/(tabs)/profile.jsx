@@ -39,7 +39,7 @@ const Profile = () => {
   const [auditionTracks, setAuditionTracks] = useState(initialAuditionTracks);
 
   const logout = () => {
-    router.push('/signin');
+    router.push('/signin?logout=true');
   };
 
   return (
@@ -136,7 +136,7 @@ const Profile = () => {
             </View>
             {/* <ProfileAudioCard track={initialAuditionTrack} onDelete={handleDeleteTrack} /> */}
           </ScrollView>
-          <Text className="text-text text-xl font-pbold mb-2">Other platforms</Text>
+          <Text className="text-text text-xl font-pbold mb-2 mt-4">Other platforms</Text>
           <View className="flex-row mb-4">
             <TouchableOpacity className="mr-2">
               <Image

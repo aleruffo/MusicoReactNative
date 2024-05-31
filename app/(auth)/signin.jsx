@@ -16,23 +16,37 @@ import { WebView } from 'react-native-webview';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SignIn = () => {
+const SignIn = ({ logout }) => {
   const [cookies, setCookies] = useState([]);
 
-  const clearCookies = () => {
+  const clearCookies = async () => {
     setCookies([]);
+    AsyncStorage.removeItem('clientId');
+    console.log('[CLEAR COOKIES] Cookies:', cookies);
+    setLoadLogin(true);
   };
 
-  // Clear cookies when the component is mounted
-  useEffect(() => {
+  if (logout) {
     clearCookies();
-  }, []);
+  }
+
+  const [loadLogin, setLoadLogin] = useState(true);
+
+  // Clear cookies when the component is mounted
+  // useEffect(() => {
+  //   clearCookies();
+  // }, []);
 
   const onMessage = async (receivedCookies) => {
     try {
+      setCookies(receivedCookies);
       await AsyncStorage.setItem('clientId', receivedCookies[0]);
     } catch (e) {
       // saving error
+    }
+    console.log('[ON MESSAGE] Received Cookies:', receivedCookies);
+    if (receivedCookies != '') {
+      setLoadLogin(false);
     }
   };
 
@@ -49,7 +63,7 @@ const SignIn = () => {
           >
             <SafeAreaView className="h-full bg-background">
               <View className="w-full h-full justify-center">
-                {cookies.length < 1 ? (
+                {loadLogin ? (
                   <>
                     <WebView
                       source={{
@@ -57,13 +71,14 @@ const SignIn = () => {
                       }}
                       onMessage={(event) => {
                         const receivedCookies = event.nativeEvent.data.split(';');
-                        setCookies(receivedCookies);
                         onMessage(receivedCookies);
                       }}
                       injectedJavaScript={`
                         window.ReactNativeWebView.postMessage(document.cookie);
                         true; 
                       `}
+                      cacheEnabled={false}
+                      incognito={true}
                     />
                   </>
                 ) : (
@@ -72,6 +87,9 @@ const SignIn = () => {
                       Entering Musico...
                     </Text>
                     <ActivityIndicator size="large" color="#fff" />
+                    <Text className="text-center text-white text-lg font-psemibold mt-8">
+                      {cookies[0]}
+                    </Text>
                     <TouchableOpacity
                       className="absolute bottom-0 right-0 p-4"
                       onPress={() => {
@@ -79,6 +97,14 @@ const SignIn = () => {
                       }}
                     >
                       <Text className="text-white">Go Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      className="absolute bottom-0 left-32 p-4"
+                      onPress={() => {
+                        clearCookies();
+                      }}
+                    >
+                      <Text className="text-white">CC</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       className="absolute bottom-0 left-0 p-4"
