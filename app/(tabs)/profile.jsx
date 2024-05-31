@@ -129,7 +129,7 @@ const Profile = () => {
                 </View>
               </View>
             </View>
-            <ProfileAudioCard track={initialAuditionTrack} onDelete={handleDeleteTrack} />
+            {/* <ProfileAudioCard track={initialAuditionTrack} onDelete={handleDeleteTrack} /> */}
           </ScrollView>
           <Text className="text-text text-xl font-pbold mb-2">Other platforms</Text>
           <View className="flex-row mb-4">

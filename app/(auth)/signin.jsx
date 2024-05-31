@@ -1,35 +1,32 @@
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FormField from '../../components/FormField';
-import { React, useState } from 'react';
-import Button from '../../components/Button';
-import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { WebView } from 'react-native-webview';
+import { router } from 'expo-router';
 
 const SignIn = () => {
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
+  const [cookies, setCookies] = useState([]);
 
-  const navigation = useNavigation();
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleLogin = () => {
-    console.log('Logging in...');
+  const clearCookies = () => {
+    setCookies([]);
   };
+
+  // Clear cookies when the component is mounted
+  useEffect(() => {
+    clearCookies();
+    console.log('len', cookies.length);
+  }, []);
 
   return (
     <>
@@ -43,44 +40,44 @@ const SignIn = () => {
             className="flex-1"
           >
             <SafeAreaView className="h-full bg-background">
-              <View className="w-full h-full px-4 my-6 justify-between">
-                <Text className="text-4xl font-pbold text-text text-center mt-16">
-                  Log in to {'\n'}Musico
-                </Text>
-                <View className="mb-20">
-                  <FormField
-                    title="Email"
-                    value={form.email}
-                    handleChangeText={(e) => setForm({ ...form, email: e })}
-                    otherStyles=""
-                    placeholder={'Enter your email'}
-                    keyboardType="email-address"
-                  />
-                  <FormField
-                    title="Password"
-                    value={form.password}
-                    handleChangeText={(e) => setForm({ ...form, password: e })}
-                    otherStyles="mt-2"
-                    placeholder={'Enter your password'}
-                  />
-                  <Button
-                    title="Log in"
-                    containerStyles="bg-accent mt-12"
-                    textStyles="text-xl font-pbold"
-                    handlePress={() => handleLogin()}
-                    isLoading={isSubmitting}
-                  />
-                  <View className="flex-row justify-center items-center mt-4">
-                    <Text className="text-text font-psemibold text-lg">Don't have an account?</Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        router.push('signup');
+              <View className="w-full h-full justify-center">
+                {cookies.length < 2 ? (
+                  <>
+                    <WebView
+                      source={{
+                        uri: 'http://204.216.223.231:8080/realms/musico-realm/account',
                       }}
+                      onMessage={(event) => {
+                        const receivedCookies = event.nativeEvent.data.split(';');
+                        setCookies(receivedCookies);
+                        console.log(receivedCookies);
+                      }}
+                      injectedJavaScript={`
+                        window.ReactNativeWebView.postMessage(document.cookie);
+                        true; 
+                      `}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Text className="text-center text-white text-2xl font-psemibold mb-8">
+                      Entering Musico...
+                    </Text>
+                    <ActivityIndicator size="large" color="#fff" />
+                    <TouchableOpacity
+                      className="absolute bottom-0 right-0 p-4"
+                      onPress={() => router.push('home')}
                     >
-                      <Text className="text-accent font-psemibold text-lg ml-2">Sign up</Text>
+                      <Text className="text-white">Go Home</Text>
                     </TouchableOpacity>
-                  </View>
-                </View>
+                    <TouchableOpacity
+                      className="absolute bottom-0 left-0 p-4"
+                      onPress={() => router.push('signup')}
+                    >
+                      <Text className="text-white">Go register</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
             </SafeAreaView>
           </KeyboardAvoidingView>
