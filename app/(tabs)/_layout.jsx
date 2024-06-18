@@ -5,6 +5,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const TabIcon = ({ icon, color, focused }) => {
+  if (focused && icon === 'sparkles') {
+    return (
+      <LinearGradient
+        colors={['#F42D78', '#6E31D8']}
+        className={'px-6 py-3 rounded-full flex-row items-center'}
+      >
+        <Icon name={focused ? icon : icon + '-outline'} ty size={24} color={'#F0ECF7'} />
+      </LinearGradient>
+    );
+  }
+
   return (
     <View
       className={focused ? 'px-6 py-3 rounded-full bg-secondary-default' : 'px-6 py-3 rounded-full'}

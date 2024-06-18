@@ -2,6 +2,7 @@ import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UserCard from '../../components/UserCard';
+import { Icon } from 'react-native-elements';
 
 const user = [
   {
@@ -34,7 +35,10 @@ const Home = () => {
   return (
     <ScrollView className="bg-background-default">
       <SafeAreaView className="p-4 bg-background-default h-full">
-        <Text className="text-text text-3xl font-pbold">Feed</Text>
+        <View className="flex-row justify-between items-center">
+          <Text className="text-text text-3xl font-pbold">Feed</Text>
+          <Icon name="search" type="material" color="#fff" />
+        </View>
         <View className="mt-4">
           <UserCard user={user[0]} />
           <UserCard user={user[1]} />
