@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, ScrollView, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { styled } from 'nativewind';
@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import ProfileAudioCard from '../../components/ProfileAudioCard';
 import { router } from 'expo-router';
+import { AuthContext } from '../../context/authContext';
 
 const profileImage = 'https://i.pravatar.cc/';
 const username = 'andres_rossetti';
@@ -24,6 +25,8 @@ const Profile = () => {
   const [genres, setGenres] = useState(initialGenres);
   const [instruments, setInstruments] = useState(initialInstruments);
 
+  const { signOut } = useContext(AuthContext);
+
   const handleDeleteTrack = (index) => {
     setAuditionTracks((prevTracks) => prevTracks.filter((_, i) => i !== index));
   };
@@ -37,10 +40,6 @@ const Profile = () => {
   };
 
   const [auditionTracks, setAuditionTracks] = useState(initialAuditionTracks);
-
-  const logout = () => {
-    router.push('/signin?logout=true');
-  };
 
   return (
     <ScrollView className="bg-background-default">
@@ -164,7 +163,8 @@ const Profile = () => {
           <TouchableOpacity
             className="bg-red-700 py-3 rounded-full mt-4 flex-row justify-center items-center"
             onPress={() => {
-              logout();
+              signOut();
+              router.push('');
             }}
           >
             <Text className="text-white font-pbold mr-2">Log out</Text>

@@ -1,12 +1,15 @@
 import { Slot, SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
-import { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import 'react-native-reanimated';
 import { StatusBar } from 'expo-status-bar';
+import { AuthContext, AuthProvider } from '../context/authContext';
 
 SplashScreen.preventAutoHideAsync();
 
 const Rootlayout = () => {
+  const { state } = useContext(AuthContext);
+
   const [fontsLoaded, error] = useFonts({
     'Goldplay-Regular': require('../assets/fonts/Goldplay-Regular.ttf'),
     'Goldplay-Thin': require('../assets/fonts/Goldplay-Thin.ttf'),
@@ -26,13 +29,18 @@ const Rootlayout = () => {
 
   return (
     <>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-
-      <StatusBar style="light" />
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen
+            name="index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        </Stack>
+      </AuthProvider>
     </>
   );
 };

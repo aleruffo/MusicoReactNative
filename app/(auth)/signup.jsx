@@ -24,10 +24,12 @@ const signupPage = () => {
       birthDate: new Date(),
       location: '',
       description: '',
+      //salvare a parte
       profilePicture: '',
     },
     playedInstruments: [],
     genres: [],
+    //salvare a parte
     personalMusic: {
       file: '',
       title: '',

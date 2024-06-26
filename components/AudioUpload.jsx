@@ -44,7 +44,7 @@ const AudioUpload = () => {
 
     try {
       const response = await axios.post(
-        'http://204.216.223.231:9095/audio/audio_analysis',
+        'http://204.216.223.231:8080/audio/audio_analysis',
         formData,
         {
           headers: {
