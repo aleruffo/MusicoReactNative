@@ -1,7 +1,8 @@
 import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import FileButton from '../../../components/FileButton';
-import AudioCard from '../../../components/AudioCard';
+import FileButton from '../../../../components/FileButton';
+import AudioCard from '../../../../components/AudioCard';
+import AudioUpload from '../../../../components/AudioUpload';
 
 const UploadMusicSection = ({ user, setUser }) => {
   const handleDeleteAudio = (index) => {
@@ -16,9 +17,9 @@ const UploadMusicSection = ({ user, setUser }) => {
     <>
       <View className="grow">
         <Text className="font-pbold text-lg text-text mt-2 mb-2">Your music</Text>
-
-        <FileButton user={user} setUser={setUser} />
-        {user.personalMusic.length > 0 ? (
+        <AudioUpload />
+        {/* <FileButton user={user} setUser={setUser} /> */}
+        {/* {user.personalMusic.length > 0 ? (
           <ScrollView className="mt-2 rounded-2xl">
             {user.personalMusic.map(
               (song) => (
@@ -34,7 +35,7 @@ const UploadMusicSection = ({ user, setUser }) => {
               )
             )}
           </ScrollView>
-        ) : null}
+        ) : null} */}
       </View>
     </>
   );

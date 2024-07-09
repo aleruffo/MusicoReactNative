@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useState } from 'react';
-import FormField from '../../../components/FormField';
+import FormField from '../../../../components/FormField';
 import DatePicker from 'react-native-date-picker';
 
 const GeneralInfoSection = ({ user, setUser }) => {
@@ -30,38 +30,7 @@ const GeneralInfoSection = ({ user, setUser }) => {
         className="flex-1"
       >
         <ScrollView className="flex-1">
-          <FormField
-            title="Full Name"
-            value={user.generalInfo.fullname}
-            onChangeText={(e) =>
-              setUser({
-                ...user,
-                generalInfo: {
-                  ...user.generalInfo,
-                  fullname: e,
-                },
-              })
-            }
-            otherStyles="mt-2"
-            placeholder={'John Doe'}
-          />
-
-          <FormField
-            title="Username"
-            value={user.generalInfo.username}
-            onChangeText={(e) =>
-              setUser({
-                ...user,
-                generalInfo: {
-                  ...user.generalInfo,
-                  username: e,
-                },
-              })
-            }
-            otherStyles="mt-2"
-            placeholder={'john_doe'}
-          />
-          <Text className="font-pbold text-lg text-text mt-2  mb-1">Birth date</Text>
+          {/* <Text className="font-pbold text-lg text-text mt-2  mb-1">Birth date</Text>
           <TouchableOpacity
             className="w-full bg-secondary-opacity25 h-14 rounded-[15px]"
             title="Select Birth Date"
@@ -93,17 +62,14 @@ const GeneralInfoSection = ({ user, setUser }) => {
             theme="dark"
             modal
             maximumDate={new Date()}
-          />
+          /> */}
           <FormField
             title="Location"
-            value={user.generalInfo.location}
+            value={user.location}
             onChangeText={(e) =>
               setUser({
                 ...user,
-                generalInfo: {
-                  ...user.generalInfo,
-                  location: e,
-                },
+                location: e,
               })
             }
             otherStyles="mt-2"
@@ -111,14 +77,11 @@ const GeneralInfoSection = ({ user, setUser }) => {
           />
           <FormField
             title="Description"
-            value={user.generalInfo.description}
+            value={user.description}
             onChangeText={(e) =>
               setUser({
                 ...user,
-                generalInfo: {
-                  ...user.generalInfo,
-                  description: e,
-                },
+                description: e,
               })
             }
             otherStyles="mt-2 mb-4"

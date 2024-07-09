@@ -1,15 +1,12 @@
-import { Slot, SplashScreen, Stack } from 'expo-router';
+import { router, Slot, SplashScreen } from 'expo-router';
 import { useFonts } from 'expo-font';
-import React, { useEffect, useState, useContext } from 'react';
+import { AuthProvider } from '../context/authContext';
 import 'react-native-reanimated';
-import { StatusBar } from 'expo-status-bar';
-import { AuthContext, AuthProvider } from '../context/authContext';
+import React, { useEffect } from 'react';
 
 SplashScreen.preventAutoHideAsync();
 
-const Rootlayout = () => {
-  const { state } = useContext(AuthContext);
-
+const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     'Goldplay-Regular': require('../assets/fonts/Goldplay-Regular.ttf'),
     'Goldplay-Thin': require('../assets/fonts/Goldplay-Thin.ttf'),
@@ -22,27 +19,23 @@ const Rootlayout = () => {
 
   useEffect(() => {
     if (error) throw error;
-    if (fontsLoaded) SplashScreen.hideAsync();
-  }, [fontsLoaded, error]);
+  }, [error]);
 
-  if (!fontsLoaded && !error) return null;
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <>
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen
-            name="index"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        </Stack>
-      </AuthProvider>
-    </>
+    <AuthProvider>
+      <Slot />
+    </AuthProvider>
   );
 };
 
-export default Rootlayout;
+export default RootLayout;

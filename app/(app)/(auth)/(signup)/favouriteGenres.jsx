@@ -1,33 +1,39 @@
 import { View, Text } from 'react-native';
-import { React, useState } from 'react';
-import FormField from '../../../components/FormField';
-import Button from '../../../components/Button';
-import AutocompleteField from '../../../components/AutocompleteField';
-import GenreCard from '../../../components/GenreCard';
+import { React, useState, useEffect, useContext } from 'react';
+import FormField from '../../../../components/FormField';
+import Button from '../../../../components/Button';
+import AutocompleteField from '../../../../components/AutocompleteField';
+import GenreCard from '../../../../components/GenreCard';
+import { AuthContext } from '../../../../context/authContext';
 
 const GenresSection = ({ user, setUser }) => {
-  const [genre, setGenre] = useState('');
+  const { state } = useContext(AuthContext);
 
-  const genresList = [
-    'Rock',
-    'Pop',
-    'Jazz',
-    'Classical',
-    'Hip Hop',
-    'Country',
-    'Blues',
-    'Reggae',
-    'Electronic',
-    'Folk',
-    'R&B',
-    'Soul',
-    'Metal',
-    'Punk',
-    'Disco',
-    'Funk',
-    'Gospel',
-    'Latin',
-  ];
+  const [genre, setGenre] = useState('');
+  const [genresList, setgenresList] = useState([]);
+
+  const fetchgenres = async () => {
+    try {
+      const response = await fetch('http://204.216.223.231:8080/user/data/genres', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${state.accessToken}`,
+        },
+      });
+      const data = await response.json().then((data) => {
+        console.log('FETCH genres: ', data);
+        setgenresList(data);
+        console.log('genres list: ', genresList);
+      });
+    } catch (e) {
+      console.log('Error fetching genres: ', e);
+    }
+  };
+
+  useEffect(() => {
+    fetchgenres();
+  }, []);
 
   const handleAddGenre = () => {
     if (genre.trim() !== '') {

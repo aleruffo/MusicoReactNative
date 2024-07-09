@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { TextInput } from 'react-native';
 import { Image } from 'react-native-elements';
 
-import youtubeIcon from '../../../assets/images/platformIcons/youtube.png';
-import spotifyIcon from '../../../assets/images/platformIcons/spotify.png';
-import appleMusicIcon from '../../../assets/images/platformIcons/applemusic.jpg';
-import tidalIcon from '../../../assets/images/platformIcons/tidal.jpeg';
-import soundcloudIcon from '../../../assets/images/platformIcons/soundcloud.png';
-import amazonMusicIcon from '../../../assets/images/platformIcons/amazonmusic.png';
+import youtubeIcon from '../../../../assets/images/platformIcons/youtube.png';
+import spotifyIcon from '../../../../assets/images/platformIcons/spotify.png';
+import appleMusicIcon from '../../../../assets/images/platformIcons/applemusic.jpg';
+import tidalIcon from '../../../../assets/images/platformIcons/tidal.jpeg';
+import soundcloudIcon from '../../../../assets/images/platformIcons/soundcloud.png';
+import amazonMusicIcon from '../../../../assets/images/platformIcons/amazonmusic.png';
 
 const OtherPlatformsSection = ({ user, setUser }) => {
   const platformData = [
@@ -35,27 +35,27 @@ const OtherPlatformsSection = ({ user, setUser }) => {
             source={platform.icon}
             className="w-12 h-12 mr-2 rounded-2xl"
             style={{
-              opacity: user.otherPlatforms[platform.varName] ? 1 : 0.5,
+              opacity: user[platform.varName] ? 1 : 0.5,
             }}
           />
           <TextInput
             placeholder={`Add ${platform.name} link`}
             placeholderTextColor="#b0b0b0"
-            value={user.otherPlatforms[platform.varName]}
+            value={user[platform.varName]}
             autoCorrect={false}
             onChangeText={(text) => {
               setUser({
                 ...user,
-                otherPlatforms: { ...user.otherPlatforms, [platform.varName]: text },
+                [platform.varName]: text,
               });
             }}
             className={`flex-1 px-4 h-12 rounded-2xl text-text font-pmedium focus:border-2`}
             style={{
-              borderColor: user.otherPlatforms[platform.varName]
+              borderColor: user[platform.varName]
                 ? platform.color + ', 1)'
                 : 'rgba(70, 42, 122, 0.50)',
               backgroundColor:
-                user.otherPlatforms[platform.varName].length > 0
+                user[platform.varName].length > 0
                   ? platform.color + ', 0.35)'
                   : 'rgba(70, 42, 122, 0.25)',
             }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Button, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
@@ -6,10 +6,12 @@ import axios from 'axios';
 import { color } from 'react-native-elements/dist/helpers';
 import { Icon } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
+import { AuthContext } from '../context/authContext';
 
 const AudioUpload = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState('');
+  const { state } = useContext(AuthContext);
 
   const pickAudioFile = async () => {
     console.log('Picking audio file...');
@@ -41,14 +43,15 @@ const AudioUpload = () => {
     setUploading(true);
 
     console.log('Uploading audio file...');
-
     try {
       const response = await axios.post(
         'http://204.216.223.231:8080/audio/audio_analysis',
+        //'http://204.216.223.231:8080/user/profile/audio',
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${state.accessToken}`,
           },
         }
       );
@@ -84,7 +87,7 @@ const AudioUpload = () => {
           <ActivityIndicator size="small" color="#FFFFFF" />
         </View>
       )}
-      {uploadStatus ? (alert(uploadStatus), setUploadStatus('')) : null}
+      {uploadStatus ? (console.log(uploadStatus), setUploadStatus('')) : null}
     </View>
   );
 };

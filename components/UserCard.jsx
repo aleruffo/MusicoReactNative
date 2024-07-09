@@ -20,7 +20,7 @@ const UserCard = ({ user }) => {
       </View>
       <View className="p-4 flex-row justify-between">
         <View className="flex-row items-center">
-          <View className="p-1 rounded-full overflow-hidden bg-primary-default mr-2">
+          <View className="p-1 rounded-full overflow-hidden bg-primary-opacity50 mr-2">
             <Icon name={user.mainInstrument} type="material" color={'#F0ECF7'} />
           </View>
           <Text className="text-text text-xl font-pbold">

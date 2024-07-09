@@ -19,6 +19,7 @@ const AutocompleteField = ({ data, placeholder, onChangeText, value }) => {
     setFilteredData(
       data.filter((item) => item.toLowerCase().includes(text.toLowerCase())).slice(0, 5)
     ); // Limit to 5 suggestions
+    console.log(filteredData);
     onChangeText(text);
   };
 

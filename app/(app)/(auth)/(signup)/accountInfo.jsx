@@ -1,6 +1,6 @@
 import { View, KeyboardAvoidingView, Platform, Text } from 'react-native';
 import { React, useState } from 'react';
-import FormField from '../../../components/FormField';
+import FormField from '../../../../components/FormField';
 import CheckBox from '@react-native-community/checkbox';
 
 const AccountInfoSection = ({ user, setUser }) => {
@@ -34,6 +34,31 @@ const AccountInfoSection = ({ user, setUser }) => {
       >
         <View className="grow">
           <FormField
+            title="Location"
+            value={user.location}
+            onChangeText={(e) =>
+              setUser({
+                ...user,
+                location: e,
+              })
+            }
+            otherStyles="mt-2"
+            placeholder={'Berlin, Germany'}
+          />
+          <FormField
+            title="Description"
+            value={user.description}
+            onChangeText={(e) =>
+              setUser({
+                ...user,
+                description: e,
+              })
+            }
+            otherStyles="mt-2 mb-4"
+            placeholder={'I am a musician...'}
+            multiline={true}
+          />
+          {/* <FormField
             title="Email"
             placeholder="Enter your email"
             otherStyles="mt-2"
@@ -64,7 +89,7 @@ const AccountInfoSection = ({ user, setUser }) => {
             }}
             value={confirmPassword}
             supportText={errorText}
-          />
+          /> */}
           <View className="flex-row pt-4 gap-3 items-center w-full">
             <CheckBox
               value={checked}

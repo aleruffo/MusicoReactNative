@@ -1,8 +1,8 @@
 import { View, Text, AccessibilityInfo } from 'react-native';
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import GeneralInfoSection from './(signup)/generalInfo';
 import PlayedInstrumentsSection from './(signup)/playedInstruments';
-import ProgressBar from '../../components/ProgressBar';
+import ProgressBar from '../../../components/ProgressBar';
 import { KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -13,39 +13,41 @@ import UploadMusicSection from './(signup)/uploadMusic';
 import AccountInfoSection from './(signup)/accountInfo';
 import { StatusBar } from 'expo-status-bar';
 import { Icon } from 'react-native-elements';
+import { AuthContext } from '../../../context/authContext';
 
 const signupPage = () => {
   const [step, setstep] = useState(0);
+  const { state } = useContext(AuthContext);
 
   const [user, setUser] = useState({
-    generalInfo: {
-      fullname: '',
-      username: '',
-      birthDate: new Date(),
-      location: '',
-      description: '',
-      //salvare a parte
-      profilePicture: '',
-    },
-    playedInstruments: [],
+    //generalInfo: {
+    //fullname: '',
+    username: state.username,
+    //birthDate: new Date(),
+    location: '',
+    description: '',
+    //salvare a parte
+    //profilePicture: '',
+    //},
+    instruments: [],
     genres: [],
     //salvare a parte
-    personalMusic: {
-      file: '',
-      title: '',
-    },
-    otherPlatforms: {
-      soundcloud: '',
-      youtube: '',
-      spotify: '',
-      appleMusic: '',
-      tidal: '',
-      amazonMusic: '',
-    },
-    accountInfo: {
-      email: '',
-      password: '',
-    },
+    // personalMusic: {
+    //   file: '',
+    //   title: '',
+    // },
+    //otherPlatforms: {
+    soundcloud: '',
+    youtube: '',
+    spotify: '',
+    appleMusic: '',
+    tidal: '',
+    amazonMusic: '',
+    //},
+    // accountInfo: {
+    //   email: '',
+    //   password: '',
+    // },
   });
 
   var stepNames = [
@@ -59,20 +61,36 @@ const signupPage = () => {
 
   const navigation = useNavigation();
 
+  const createUser = async (user) => {
+    try {
+      const response = await fetch('http://204.216.223.231:8080/user/profile/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${state.accessToken}`,
+        },
+        body: user,
+      });
+      console.log('User created: ', response);
+    } catch (e) {
+      console.log('Error creating user: ', e);
+    }
+  };
+
   const handleNext = () => {
     if (step === 5) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: '(tabs)' }],
+      createUser(user).then(() => {
+        router.push('home');
       });
       console.log(user);
     } else setstep(step + 1);
-    console.log(user.otherPlatforms);
   };
 
   const handlePrevious = () => {
     if (step === 0) {
-      router.dismiss();
+      //console.log('State: ', state);
+      //router.dismiss();
+      router.push('home');
     } else setstep(step - 1);
   };
 

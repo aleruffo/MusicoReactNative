@@ -40,3 +40,4 @@ Musico.app/
 
 # tar.gz files
 *.tar.gz
+.env

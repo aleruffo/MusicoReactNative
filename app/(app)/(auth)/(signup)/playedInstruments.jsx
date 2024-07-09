@@ -1,41 +1,46 @@
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { React, useState } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import FormField from '../../../components/FormField';
-import Button from '../../../components/Button';
-import AutocompleteField from '../../../components/AutocompleteField';
-import InstrumentCard from '../../../components/InstrumentCard';
+import FormField from '../../../../components/FormField';
+import Button from '../../../../components/Button';
+import AutocompleteField from '../../../../components/AutocompleteField';
+import InstrumentCard from '../../../../components/InstrumentCard';
+import { AuthContext } from '../../../../context/authContext';
 
 const PlayedInstrumentsSection = ({ user, setUser }) => {
+  const { state } = useContext(AuthContext);
   const navigation = useNavigation();
   const [instrument, setinstrument] = useState('');
+  const [instrumentsList, setinstrumentsList] = useState([]);
 
-  const instrumentsList = [
-    'Guitar',
-    'Piano',
-    'Violin',
-    'Drums',
-    'Bass',
-    'Saxophone',
-    'Trumpet',
-    'Flute',
-    'Cello',
-    'Clarinet',
-    'Harp',
-    'Mandolin',
-    'Banjo',
-    'Accordion',
-    'Ukulele',
-    'Trombone',
-    'Oboe',
-    'Synthesizer',
-  ];
+  const fetchInstruments = async () => {
+    try {
+      const response = await fetch('http://204.216.223.231:8080/user/data/instruments', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${state.accessToken}`,
+        },
+      });
+      const data = await response.json().then((data) => {
+        console.log('FETCH INSTRUMENTS: ', data);
+        setinstrumentsList(data);
+        console.log('Instruments list: ', instrumentsList);
+      });
+    } catch (e) {
+      console.log('Error fetching instruments: ', e);
+    }
+  };
+
+  useEffect(() => {
+    fetchInstruments();
+  }, []);
 
   const handleAddInstrument = () => {
     if (instrument.trim() !== '') {
       setUser((user) => ({
         ...user,
-        playedInstruments: [...user.playedInstruments, instrument],
+        instruments: [...user.instruments, instrument],
       }));
       setinstrument('');
     }
@@ -44,7 +49,7 @@ const PlayedInstrumentsSection = ({ user, setUser }) => {
   const handleDeleteInstrument = (instrument) => {
     setUser((user) => ({
       ...user,
-      playedInstruments: user.playedInstruments.filter((g) => g !== instrument),
+      instruments: user.instruments.filter((g) => g !== instrument),
     }));
   };
 
@@ -65,7 +70,7 @@ const PlayedInstrumentsSection = ({ user, setUser }) => {
           textStyles="text-text font-psemibold text-lg"
         />
         <View className="mt-5">
-          {user.playedInstruments.map((instrument, index) => (
+          {user.instruments.map((instrument, index) => (
             <InstrumentCard
               key={index}
               instrument={instrument}

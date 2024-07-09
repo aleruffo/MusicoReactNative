@@ -15,11 +15,11 @@ const InstrumentCard = ({ instrument, onDelete }) => {
 
   return (
     <View
-      className="flex-row justify-between items-center rounded-[15px] p-4 mb-2"
-      style={{ backgroundColor: generateRandomDarkColor() }}
+      className="flex-row justify-between items-center rounded-[15px] p-4 mb-2 bg-secondary-opacity25"
+      //style={{ backgroundColor: generateRandomDarkColor() }}
     >
-      <Icon name={instrument} type="material" color="#ff4d4d" />
-      <Text className="text-white font-psemibold text-lg">{instrument}</Text>
+      <Icon name="music-note" type="material" color="#fff" />
+      <Text className="text-text font-psemibold text-lg">{instrument}</Text>
       <TouchableOpacity onPress={onDelete}>
         <Icon name="delete" type="material" color="#ff4d4d" />
       </TouchableOpacity>
